@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
+import {v4} from 'uuid';
 
-const Form = () => {
+const Form = ({createAppointment}) => {
 
     // Create Appointments State
     const [appointment, updateAppointment] = useState({
@@ -37,12 +38,24 @@ const Form = () => {
                 return;
         }
 
+        // Delete Previous message
+        updateError(false);
+
         // Assign ID
+        appointment.id = v4();
+        console.log(appointment.id);
 
         // Create Appointment
+        createAppointment(appointment);
 
         // Reset Form
-
+        updateAppointment({
+            pet: '',
+            owner: '',
+            date: '',
+            hour: '',
+            symptoms: ''
+        });
 
     }
 
