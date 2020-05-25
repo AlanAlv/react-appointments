@@ -11,6 +11,10 @@ const Form = () => {
         symptoms: ''
     });
 
+    //  State
+    const [error, updateError] = useState(false);
+
+
     // Function to update state when user types on input
     const updateState = e => {
         updateAppointment({
@@ -27,6 +31,11 @@ const Form = () => {
         e.preventDefault();
         
         // Validation
+        if (pet.trim() === '' || owner.trim() === '' || date.trim() === '' || 
+            hour.trim() === '' || symptoms.trim() === '' ){
+                updateError(true);
+                return;
+        }
 
         // Assign ID
 
@@ -40,6 +49,11 @@ const Form = () => {
     return ( 
         <Fragment>
             <h2>Create Appointment</h2>
+            { error ? 
+                <p className="alert-error">All fields are required</p> 
+            : 
+                null
+            }
             <form
                 onSubmit={submitAppointment}
             >

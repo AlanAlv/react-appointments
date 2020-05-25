@@ -82,7 +82,7 @@ input[type="time"] {
   margin-top: 2rem;
 }
 
-.alerta-error {
+.alert-error {
   background-color: white;
   color: red;
   padding: 1rem;
