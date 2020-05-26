@@ -1,11 +1,22 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Form from './components/Form';
 import Appointment from './components/Appointment';
 
 function App() {
 
+  // Appointments on Local Storage
+  let initialAppointments = JSON.parse(localStorage.getItem('appointments'));
+  if (!initialAppointments) {
+    initialAppointments = [];
+  }
+
   // Appointments array
-  const [appointments, saveAppointments] = useState([]);
+  const [appointments, saveAppointments] = useState(initialAppointments);
+
+  // UseEffect to do operations when state changes
+  useEffect(() => {
+      localStorage.setItem('appointments', JSON.stringify(appointments));
+  }, [appointments]);
 
   // Add new appointment to prevoius ones.
   const createAppointment = appointment => {
@@ -21,6 +32,8 @@ function App() {
     saveAppointments(newAppointments);
   }
 
+  // Conditional message
+  const title =  appointments.length === 0 ? 'There are no appointments' : 'Manage your appointments';
 
   return (
     <Fragment>
@@ -34,10 +47,10 @@ function App() {
             />
           </div>
           <div className="one-half column">
-            <h2>Manage your appointments</h2>
+            <h2>{title}</h2>
             {appointments.map(appointment => (
               <Appointment 
-                key={appointment.key}  
+                key={appointment.id}  
                 appointment={appointment}
                 deleteAppointment={deleteAppointment}
               />
